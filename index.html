@@ -2,425 +2,157 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portfolio</title>
-	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
-	<style>
-		:root {
-			--accent: #ffd700;
-			--accent-light: #ffe88b;
-			--bg-dark: #1a1a1a;
-			--bg-mid: #333;
-			--highlight: #00b4d8;
-			--text-light: #f0f0f0;
-		}
-
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			scroll-behavior: smooth;
-		}
-
-		body {
-			font-family: 'Ubuntu', sans-serif;
-			background: linear-gradient(135deg, var(--bg-dark), var(--bg-mid));
-			color: var(--text-light);
-			overflow-x: hidden;
-		}
-
-		/* Floating Navbar */
-		nav {
-			position: fixed;
-			top: 0;
-			width: 100%;
-			background: rgba(26, 26, 26, 0.85);
-			backdrop-filter: blur(8px);
-			border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-			display: flex;
-			justify-content: center;
-			padding: 10px 0;
-			z-index: 999;
-			transition: all 0.3s ease;
-		}
-
-		nav a {
-			color: var(--accent);
-			text-decoration: none;
-			font-weight: 600;
-			margin: 0 20px;
-			transition: color 0.3s ease, transform 0.2s ease;
-			padding-bottom: 4px;
-			border-bottom: 2px solid transparent;
-		}
-
-		nav a:hover {
-			color: var(--highlight);
-			transform: translateY(-2px);
-		}
-
-		/* Active link (based on :target section) */
-		section:target~nav a[href*="#overview"],
-		section:target~nav a[href*="#design"],
-		section:target~nav a[href*="#links"],
-		section:target~nav a[href*="#footer"] {
-			border-bottom: 2px solid var(--highlight);
-			color: var(--highlight);
-		}
-
-		/* Header */
-		header {
-			background-color: #6a3800;
-			text-align: center;
-			padding: 70px 15px 35px;
-			color: #fff;
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-			margin-top: 45px;
-			animation: fadeDown 1s ease;
-		}
-
-		header h1 {
-			text-decoration: underline wavy var(--accent);
-			font-size: 2rem;
-			letter-spacing: 1px;
-		}
-
-		h2 {
-			color: var(--accent);
-			text-align: center;
-			margin: 40px 0 20px;
-			/* text-decoration: underline wavy var(--accent); */
-			animation: fadeIn 1.2s ease;
-		}
-
-		/* Collapsible Sections */
-		details {
-			width: 90%;
-			margin: 20px auto;
-			background: rgba(255, 255, 255, 0.08);
-			border-radius: 12px;
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-			overflow: hidden;
-			transition: all 0.4s ease;
-		}
-
-		summary {
-			background: rgba(255, 255, 255, 0.12);
-			color: var(--accent-light);
-			font-weight: 700;
-			padding: 18px 20px;
-			font-size: 1.3rem;
-			cursor: pointer;
-			list-style: none;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			transition: background 0.3s ease;
-		}
-
-		summary:hover {
-			background: rgba(255, 255, 255, 0.2);
-		}
-
-		details[open] summary {
-			background: rgba(255, 215, 0, 0.15);
-			color: var(--accent);
-		}
-
-		summary::after {
-			content: "▼";
-			font-size: 0.9rem;
-			color: var(--accent);
-		}
-
-		details[open] summary::after {
-			content: "▲";
-		}
-
-		/* Cards inside collapsibles */
-		.card-container {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-			gap: 25px;
-			padding: 25px;
-			animation: slideUp 1.2s ease;
-		}
-
-		.card {
-			background: rgba(255, 255, 255, 0.07);
-			border-radius: 12px;
-			padding: 20px;
-			text-align: center;
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-			backdrop-filter: blur(6px);
-		}
-
-		.card:hover {
-			transform: translateY(-8px);
-			box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-		}
-
-		.card h3 {
-			color: var(--accent-light);
-			font-size: 1.2rem;
-			margin-bottom: 10px;
-		}
-
-		.card ul {
-			list-style: none;
-			padding: 0;
-			margin-top: 8px;
-		}
-
-		.card ul li {
-			padding: 5px 0;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-		}
-
-		/* Links Section */
-		.links {
-			text-align: center;
-			font-size: 1.2rem;
-			margin: 50px 0;
-			animation: fadeIn 1.5s ease;
-		}
-
-		.links a {
-			color: var(--accent);
-			text-decoration: none;
-			font-weight: 600;
-			transition: color 0.3s ease;
-		}
-
-		.links a:hover {
-			color: var(--highlight);
-		}
-
-		.links hr {
-			width: 60%;
-			border: 0;
-			height: 1px;
-			background: linear-gradient(to right, transparent, var(--accent), transparent);
-			margin: 25px auto;
-		}
-
-		/* Footer */
-		footer {
-			background-color: #6a3800;
-			color: white;
-			text-align: center;
-			padding: 25px;
-			font-size: 1rem;
-			box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.4);
-			animation: fadeUp 1s ease;
-		}
-
-		footer a {
-			color: var(--accent);
-			font-weight: bold;
-		}
-
-		footer p {
-			margin-top: 10px;
-			font-size: 0.9rem;
-			color: #ccc;
-		}
-
-		/* Animations */
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-			}
-
-			to {
-				opacity: 1;
-			}
-		}
-
-		@keyframes fadeDown {
-			from {
-				transform: translateY(-40px);
-				opacity: 0;
-			}
-
-			to {
-				transform: translateY(0);
-				opacity: 1;
-			}
-		}
-
-		@keyframes fadeUp {
-			from {
-				transform: translateY(40px);
-				opacity: 0;
-			}
-
-			to {
-				transform: translateY(0);
-				opacity: 1;
-			}
-		}
-
-		@keyframes slideUp {
-			from {
-				transform: translateY(60px);
-				opacity: 0;
-			}
-
-			to {
-				transform: translateY(0);
-				opacity: 1;
-			}
-		}
-
-		/* Responsive */
-		@media (max-width: 600px) {
-			header h1 {
-				font-size: 1.5rem;
-			}
-
-			summary {
-				font-size: 1.1rem;
-			}
-
-			.card h3 {
-				font-size: 1.1rem;
-			}
-
-			.links hr {
-				width: 80%;
-			}
-
-			nav a {
-				margin: 0 10px;
-				font-size: 0.9rem;
-			}
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vimal Patel • Professional Details</title>
+    <!-- Favicon -->
+    <!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <!-- Portfolio Stylesheet -->
+    <link rel="stylesheet" href="/css/portfolio.css">
+    <link rel="stylesheet" href="/css/go-back-btn.css">
+    <!-- Ubuntu Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<!-- Floating Navigation -->
-	<nav>
-		<a href="#overview">Overview</a>
-		<a href="#design">Design</a>
-		<a href="#links">GitHub</a>
-		<a href="https://vimaltech.dev/">Home</a>
-	</nav>
+    <!-- Floating Navigation -->
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#design">Design</a>
+        <a href="#github-links">GitHub</a>
+        <a href="https://vimaltech.dev/expertise">Expertise</a>
+        <a href="https://vimaltech.dev/">Home</a>
+    </nav>
 
-	<header>
-		<h1>Welcome To Java Dev Portfolio</h1>
-	</header>
+    <header>
+        <span style="color: #ffd700; font-weight: bold;">
+            <h1>Welcome To Vimal Patel's 
+        </span><br />
 
-	<!-- Sections -->
-	<section id="overview">
-		<h2>💻 Tech Stack Overview</h2>
-		<details open>
-			<summary>🧠 Developer Profile & Stack</summary>
-			<div class="card-container">
-				<div class="card">
-					<h3>👨‍💻 Profession</h3>
-					<ul>
-						<li>Java Developer</li>
-						<li>(BE-IT)</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>⚙️ Backend</h3>
-					<ul>
-						<li>Java, Spring Boot, Web Services</li>
-						<li>Microservices, Docker</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>🗄️ Database / Workspace</h3>
-					<ul>
-						<li>SQL (Oracle, MySQL, PostgreSQL)</li>
-						<li>NoSQL (MongoDB, Cassandra)</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>🎨 Front-End</h3>
-					<ul>
-						<li>ReactJS</li>
-						<li>AngularJS</li>
-					</ul>
-				</div>
-			</div>
-		</details>
-	</section>
+        <span style="color: #ffe88b; font-weight: bold;">Professional Details</span>
+        </h1>
+    </header>
 
-	<section id="design">
-		<h2>🧩 Design & Architecture</h2>
-		<details>
-			<summary>🏗️ System & Design Patterns</summary>
-			<div class="card-container">
-				<div class="card">
-					<h3>🧱 System Design</h3>
-					<ul>
-						<li>Low-level design</li>
-						<li>High-level design</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>♻️ Design Patterns</h3>
-					<ul>
-						<li>DAO</li>
-						<li>Singleton</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>📚 Core Subjects</h3>
-					<ul>
-						<li>J2SE</li>
-						<li>J2EE</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>🔧 API Tools</h3>
-					<ul>
-						<li>Postman</li>
-						<li>Swagger</li>
-					</ul>
-				</div>
-				<div class="card">
-					<h3>📘 Field Subjects</h3>
-					<ul>
-						<li>DCN, DBMS, OOADU</li>
-						<li>OS, DFS, DAA</li>
-					</ul>
-				</div>
-			</div>
-		</details>
-	</section>
+    <!-- Sections -->
+    <section id="overview">
+        <h2>💻 Tech Stack Overview</h2>
+        <details open>
+            <summary>🧠 Developer Profile & Stack</summary>
+            <div class="card-container">
+                <div class="card">
+                    <h3>👨‍💻 Profession</h3>
+                    <ul>
+                        <li>Java Developer</li>
+                        <li>(BE-IT)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚙️ Backend</h3>
+                    <ul>
+                        <li>Java, Spring Boot, Web Services</li>
+                        <li>Microservices, Docker</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🗄️ Database / Workspace</h3>
+                    <ul>
+                        <li>SQL (Oracle, MySQL, PostgreSQL)</li>
+                        <li>NoSQL (MongoDB, Cassandra)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🎨 Front-End</h3>
+                    <ul>
+                        <li>ReactJS</li>
+                        <li>AngularJS</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+    </section>
 
-	<section id="links">
-		<div class="links">
-			<hr>
-			<a href="https://github.com/vimal-java-dev/" target="_blank">GitHub link-1</a>
-			<hr>
-			<a href="https://github.com/vimal-tech-dev/" target="_blank">GitHub link-2</a>
-			<hr>
-			<a href="https://github.com/vimal-tech-starter/" target="_blank">GitHub link-3</a>
-			<hr>
-		</div>
-	</section>
+    <section id="design">
+        <h2>🧩 Design & Architecture</h2>
+        <details>
+            <summary>🏗️ System & Design Patterns</summary>
+            <div class="card-container">
+                <div class="card">
+                    <h3>🧱 System Design</h3>
+                    <ul>
+                        <li>Low-level design</li>
+                        <li>High-level design</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>♻️ Design Patterns</h3>
+                    <ul>
+                        <li>DAO</li>
+                        <li>Singleton</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📚 Core Subjects</h3>
+                    <ul>
+                        <li>J2SE</li>
+                        <li>J2EE</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔧 API Tools</h3>
+                    <ul>
+                        <li>Postman</li>
+                        <li>Swagger</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📘 Field Subjects</h3>
+                    <ul>
+                        <li>DCN, DBMS, OOADU</li>
+                        <li>OS, DFS, DAA</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+    </section>
 
-	<footer id="footer">
-		<div>
-			<b>
-				<a href="https://vimaltech.dev/">GO<strong>&nbsp; &#8617; &nbsp;</strong>TO Vimal Tech</a>
-				<p>&#9400; 23-Sept-2023</p>
-			</b>
-		</div>
-	</footer>
+    <section id="github-links">
+        <div class="links">
+            <hr>
+            <a href="https://github.com/vimal-java-dev/" target="_blank">GitHub Link - 1: Professional</a>
+            <hr>
+            <a href="https://github.com/vimal-tech-dev/" target="_blank">GitHub Link - 2: Vimal Tech</a>
+            <hr>
+            <a href="https://github.com/vimal-tech-starter/" target="_blank">GitHub Link - 3: Personal</a>
+            <hr>
+        </div>
+    </section>
+
+    <div class="center-content">
+        <button id="backButton" class="elegant-back-button">
+            <span class="icon">&#x2190;</span> <span class="text">Go Back</span>
+        </button>
+    </div>
+
+    <footer id="footer">
+        <div>
+            <b>
+                <p>&#9400; 23 - SEPT - 2023</p><br />
+                <p>
+                    | Vimal Patel |</br>
+                    | Software Development Engineer |</br>
+                    | Java Developer Portfolio |
+                </p>
+            </b>
+        </div>
+    </footer>
+
+    <!-- Navigation Logic -->
+    <!-- history.back(); -->
+    <!-- Go Back Button JS -->
+    <script src="/js/go-back-btn.js"></script>
 </body>
 
 </html>
